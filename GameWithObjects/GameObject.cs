@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,6 +62,21 @@ namespace GameWithObjects
                 int dy = target.Y > Y ? 1 : target.Y < Y ? -1 : 0;
                 Move(dx, dy, maxX, maxY);
                 frameCounter = 0;
+            }
+        }
+    }
+    class Player : GameObject
+    {
+        public int HP { get; private set; }
+        public Player(int x, int y, string sprite, int hp): base (x, y, sprite)
+        {
+            HP = hp;
+        }
+        public void CheckCollisionWith(GameObject other)
+        {
+            if(X == other.X && Y == other.Y)
+            {
+                HP -= 1;
             }
         }
     }
