@@ -7,6 +7,7 @@ namespace GameWithObjects
         static Player player;
         //static Enemy enemy;
         static List<Enemy> enemies;
+        static List<Coin> coins;
 
         static Random random = new Random();
         static bool isRunning = true;
@@ -16,7 +17,8 @@ namespace GameWithObjects
 
         static int windowWidth = 40;
         static int windowHeight = 20;
-        private static int numberOfEnemies = 5;
+        private static int numberOfEnemies = 3;
+        private static int numberOfCoins = 5;
 
 
 
@@ -36,6 +38,14 @@ namespace GameWithObjects
                 int x = random.Next(0, windowWidth);
                 int y = random.Next(0, windowHeight);
                 enemies.Add(new Enemy(x, y, "X", speed));
+            }
+            //challange coin
+            coins = new List<Coin>();
+            for (int i = 0; i < numberOfCoins; i++)
+            {
+                int x = random.Next(0, windowWidth);
+                int y = random.Next(0, windowHeight);
+                coins.Add(new Coin(x, y, "C"));
             }
 
             while (isRunning)
@@ -86,10 +96,22 @@ namespace GameWithObjects
                 enemy.Update(player, windowWidth, windowHeight);
                 player.CheckCollisionWith(enemy);
             }
+            //coin
+            coins.RemoveAll(coin => player.X == coin.X && player.Y == coin.Y);
+            if (coins.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("you've collected all the coins!");
+                Console.WriteLine("You win!");
+                Console.ReadKey(true);
+                isRunning = false;
+            }
+     
             if (player.HP < 1)
             {
+                Console.Clear();
                 Console.WriteLine("Game Over!");
-                
+                Console.ReadKey(true);
                 isRunning = false;
             }
 
@@ -103,6 +125,12 @@ namespace GameWithObjects
             {
                 enemy.Draw();
             }
+            //coins
+            foreach(Coin coin in coins)
+            {
+                coin.Draw();
+            }
+
             
 
             Console.SetCursorPosition(0, 21);
@@ -110,5 +138,5 @@ namespace GameWithObjects
             Console.WriteLine($"Player HP: {player.HP}");
         }
        }
-
-    }
+ 
+}

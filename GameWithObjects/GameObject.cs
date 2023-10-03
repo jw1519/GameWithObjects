@@ -64,6 +64,13 @@ namespace GameWithObjects
                 frameCounter = 0;
             }
         }
+        public override void Draw()  // <-- Override Draw method
+        {
+            Console.SetCursorPosition(X, Y);
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write(Sprite);
+            Console.ResetColor();
+        }
     }
     class Player : GameObject
     {
@@ -79,5 +86,23 @@ namespace GameWithObjects
                 HP -= 1;
             }
         }
+        public override void Draw()  // <-- Override Draw method
+        {
+            Console.SetCursorPosition(X, Y);
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write(Sprite);
+            Console.ResetColor();
+        }
+
+    }
+    //challange coin
+    class Coin : GameObject
+    {
+        public int coin { get; private set; }
+        public Coin(int x, int y, string sprite): base (x, y, sprite)
+        {
+            
+        }
+        
     }
 }
